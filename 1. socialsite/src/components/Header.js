@@ -71,11 +71,6 @@ const Header = (props) => {
                         <img onClick={profileApper} className="profile_btn" src="" />
                     }
                     <div className="profile_detail_box">
-                        <a href="modify.html" style={{ fontSize: '20px' }} className="tp_profile_detail">
-                            {props.username !== undefined ? <p>{props.profileData.first_name + props.profileData.last_name}</p>
-                                : <div></div>
-                            }
-                        </a>
                         <Link className="tp_profile_detail" to='/dashbord'>Dashboard</Link>
                         <a href="modify.html" className="profile_detail">Reading List</a>
                         <Link className="profile_detail" to='/settings'>Settings</Link>

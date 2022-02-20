@@ -130,7 +130,10 @@ class UpdateUserView(APIView):
         user.save()
 
         profile.first_name = request.data['name']
-        profile.image = request.data['profileImg']
+        try:
+            profile.image = request.data['profileImg']
+        except:
+            pass
         profile.description = request.data['bio']
         profile.address = request.data['location']
         profile.work = request.data['work']

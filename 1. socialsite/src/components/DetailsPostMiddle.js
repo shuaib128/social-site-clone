@@ -1,12 +1,12 @@
-import React, {Fragment, useRef} from 'react'
-import Glide, { Slide } from 'react-glidejs';
+import React, { Fragment, useRef } from 'react'
+import Glide from 'react-glidejs';
 import 'react-glidejs/dist/index.css';
 import CommentSection from './CommentSection';
 import { Link } from 'react-router-dom';
 
 const DetailsPostMiddle = (props) => {
     const gliderRef = useRef(null);
-    
+
     return (
         <div className="details_post_middle">
             {props.post.images.length !== 0 ?
@@ -23,7 +23,7 @@ const DetailsPostMiddle = (props) => {
                 >
 
                     {props.post.images.map((image, index) => {
-                        return(
+                        return (
                             <Fragment>
                                 <img src={image.image} />
                             </Fragment>
@@ -48,7 +48,7 @@ const DetailsPostMiddle = (props) => {
                     <Link to={"/user/profile/" + props.post.ProfileItems.id}>
                         <img src={props.post.ProfileItems.image} />
                     </Link>
-                    
+
                     <p className="post_detail_user_name">{props.post.Author}</p>
                     <div className='post_detail_user_name_date'>
                         <p className="post_date_details">{props.post.pub_date}</p>
@@ -58,8 +58,8 @@ const DetailsPostMiddle = (props) => {
 
                 <p className="details_post_sec">{props.post.description}</p>
 
-                <CommentSection 
-                    post={props.post} 
+                <CommentSection
+                    post={props.post}
                     profileData={props.profileData}
                     username={props.username}
                 />

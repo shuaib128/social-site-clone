@@ -26,7 +26,11 @@ const PostDetail = (props) => {
           post={post}
           profileData={props.profileData}
         />
-        <DetailsPostRight post={post} profileData={props.profileData} />
+        <DetailsPostRight
+          post={post}
+          profileID={props.profileID}
+          profileData={props.profileData}
+        />
       </div>
     </div>
   );

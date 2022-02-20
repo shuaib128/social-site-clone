@@ -1,10 +1,13 @@
 import React, {useState, useEffect} from 'react'
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import { ServerHost } from './ServerHost';
 import { BackendHost } from '../Api/BackendHost';
 
 const SettingsForms = (props) => {
+    const history = useHistory()
+
     const [profileImage, setProfileImage] = useState(null);
     const [username, setUsername] = useState('');
     const [name, setName] = useState('');
@@ -59,14 +62,18 @@ const SettingsForms = (props) => {
         formData.append('location', location);
         formData.append('education', education);
         formData.append('profileID', props.profileID);
-        formData.append('profileImg', profileImage.image);
+        try {
+            formData.append('profileImg', profileImage.image);
+        } catch (error) {
+            
+        }
 
         //Send data with axios
         axios
             .post(URL, formData, config)
             .catch((err) => console.log(err));
         
-        // setRedirect(true);
+        setRedirect(true);
             
     }
     if (redirect) {
