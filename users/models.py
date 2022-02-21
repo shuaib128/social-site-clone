@@ -8,6 +8,13 @@ from chat.models import Chatroom
 #Saved Posts
 class SavedPosts(models.Model):
     name = models.CharField(max_length=150, blank=True)
+    post_id = models.IntegerField(blank=True, default=1)
+    Author = models.CharField(max_length=150, blank=True)
+    title = models.CharField(max_length=150, blank=True)
+    pubDate = models.CharField(max_length=150, blank=True)
+
+    def __str__(self):
+        return f"{self.name}"
 
 # User Profile
 class Profile(models.Model):

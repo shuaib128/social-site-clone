@@ -82,7 +82,7 @@ const Header = (props) => {
                     }
                     <div className="profile_detail_box">
                         <Link className="tp_profile_detail" to='/dashbord'>Dashboard</Link>
-                        <a href="modify.html" className="profile_detail">Reading List</a>
+                        <Link className="profile_detail" to='/readinglist'>ReadingList</Link>
                         <Link className="profile_detail" to='/settings'>Settings</Link>
                         <Link className="tp_profile_detail" to="/register" onClick={logout}>LogOut</Link>
                         <Link to="/new_post" className="write_post_btn">Write a post</Link>

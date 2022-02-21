@@ -1,12 +1,13 @@
-from django.shortcuts import get_object_or_404, render
-from rest_framework import serializers
+from turtle import title
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import UserSerializer, ProfileSerializer
 from rest_framework.exceptions import AuthenticationFailed
-import jwt, datetime
+import jwt
+import datetime
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, SavedPosts
 from rest_framework.authtoken.views import Token
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from django.contrib.auth.hashers import make_password
@@ -23,12 +24,13 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 
         return token
 
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
 # Create your views here.
-#Register view hwre
+# Register view hwre
 class RegisterView(APIView):
     def post(self, request):
         print(request.data)
@@ -36,13 +38,13 @@ class RegisterView(APIView):
         user = User.objects.create(
             email=request.data['email'],
             username=request.data['username'],
-            password = make_password(request.data['password'])
+            password=make_password(request.data['password'])
         )
         Token.objects.create(user=user)
         return Response(user)
 
 
-#Login view hwre
+# Login view hwre
 class LoginView(APIView):
     def post(self, request):
         email = request.data['email']
@@ -64,7 +66,8 @@ class LoginView(APIView):
             'iat': datetime.datetime.utcnow()
         }
 
-        token = jwt.encode(payload, 'secret', algorithm='HS256').decode('utf-8')
+        token = jwt.encode(payload, 'secret',
+                           algorithm='HS256').decode('utf-8')
 
         response = Response()
 
@@ -77,7 +80,7 @@ class LoginView(APIView):
         return response
 
 
-#User view hwre
+# User view hwre
 class UserView(APIView):
     def get(self, request):
         token = request.COOKIES.get('jwt')
@@ -96,7 +99,7 @@ class UserView(APIView):
         return Response(serializer.data)
 
 
-#Logout view hwre
+# Logout view hwre
 class LogoutView(APIView):
     def post(self, request):
         response = Response()
@@ -108,7 +111,7 @@ class LogoutView(APIView):
         return response
 
 
-#Profile view hwre
+# Profile view hwre
 class ProfileView(APIView):
     def post(self, request):
 
@@ -123,7 +126,7 @@ class UpdateUserView(APIView):
     def post(self, request):
         user = get_object_or_404(User, id=request.data['profileID'])
         profile = get_object_or_404(Profile, id=request.data['profileID'])
-        
+
         user.first_name = request.data['name']
         user.email = request.data['email']
         user.username = request.data['username']
@@ -147,7 +150,7 @@ class UpdateUserView(APIView):
         return response
 
 
-#Req user view here
+# Req user view here
 class ReqUserView(APIView):
     def get(self, request, pk):
         profile = Profile.objects.filter(user=pk).first()
@@ -155,7 +158,7 @@ class ReqUserView(APIView):
         return Response(serializer.data)
 
 
-#Get Followers
+# Get Followers
 class FollowesView(APIView):
     def post(self, request):
         followerID = request.data["followerID"]
@@ -168,7 +171,7 @@ class FollowesView(APIView):
             userProfile.Following.remove(followerID)
         else:
             userProfile.Following.add(followerID)
-        
+
         response = Response()
         response.data = {
             'message': 'success'
@@ -176,8 +179,31 @@ class FollowesView(APIView):
         return response
 
 
-#Save post view
+# Save post view
 class SavePostView(APIView):
-    def get(self, request):
-        print("got it")
+    def post(self, request):
+        # All datas
+        post_id = request.data["postId"]
+        Author = request.data["Author"]
+        pubDate = request.data["pubDate"]
+        Title = request.data["Title"]
+        whenPublished = request.data["whenPublished"]
+        profileID = request.data["profileID"]
+
+        # name for saved posts
+        name = f"{post_id}{Author}{pubDate}{profileID}{Title}{whenPublished}"
+
+        # make a new saved post
+        SavedPosts.objects.create(
+            name=name,
+            post_id=post_id,
+            Author=Author,
+            title=Title,
+            pubDate=whenPublished
+        )
+        # Add to profile
+        user = get_object_or_404(Profile, id=profileID)
+        post = get_object_or_404(SavedPosts, name=name)
+        user.saved_posts.add(post)
+
         return Response("saved")

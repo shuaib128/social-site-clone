@@ -25,6 +25,7 @@ import NewVideo from "./pages/NewVideo";
 import DashBordVideos from "./pages/DashBordVideos";
 import DashbordVideoEditPageComponent from "./components/DashbordVideos/DashbordVideoEditPageComponent";
 import DashVideoEditForm from "./components/DashbordVideos/DashVideoEditForm";
+import ReadingListPage from "./pages/ReadingListPage";
 
 //Chat page
 import ChatRoom from "./pages/ChatRoom";
@@ -218,6 +219,16 @@ function App() {
               profileData={profileData}
               username={name}
               profileID={profileID}
+            />
+          )}
+        />
+
+        <Route
+          path="/readinglist"
+          exact
+          component={() => (
+            <ReadingListPage
+              profileData={profileData}
             />
           )}
         />

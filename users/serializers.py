@@ -1,8 +1,6 @@
-from django.db import models
-from django.db.models import fields
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, SavedPosts
 
 #User Serileizer
 class UserSerializer(serializers.ModelSerializer):
@@ -22,9 +20,18 @@ class UserSerializer(serializers.ModelSerializer):
             instance.save()
             return instance
 
+#Saved post
+class SavedPostSerilizer(serializers.ModelSerializer):
+    class Meta:
+        model = SavedPosts
+        fields = [
+            "post_id"
+        ]
 
 #Profile Serilizer
 class ProfileSerializer(serializers.ModelSerializer):
+    saved_posts = SavedPostSerilizer(many=True)
+
     class Meta:
         model = Profile
         fields = [
@@ -38,5 +45,6 @@ class ProfileSerializer(serializers.ModelSerializer):
             'education',
             'address',
             'joined_date',
-            'Following'
+            'Following',
+            'saved_posts'
         ]

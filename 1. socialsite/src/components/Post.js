@@ -41,10 +41,17 @@ const Post = (props) => {
 
 
     //Save to reading list handler
-    const savePost = () => {
-        axios.get(`${BackendHost}/api/user/save/`)
+    const savePost = (post_id, author, pub_date, title, when_published) => {
+        axios.post(`${BackendHost}/api/user/save/`, {
+            postId: post_id,
+            Author: author,
+            pubDate: pub_date,
+            Title: title,
+            whenPublished: when_published,
+            profileID: props.profileID
+        })
             .then(res => {
-                
+
             })
     }
 
@@ -111,7 +118,7 @@ const Post = (props) => {
                                         </div>
                                     </div>
 
-                                    <div className="post_bottom_left" onClick={savePost}>
+                                    <div className="post_bottom_left" onClick={() => savePost(post.id, post.Author, post.pub_date, post.title, post.whenpublished)}>
                                         <p>{post.get_readtime} read</p>
                                         <p>Save</p>
                                     </div>
