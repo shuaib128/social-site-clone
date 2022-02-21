@@ -103,6 +103,17 @@ const EditForm = (props) => {
       setCoverimage({
         image: e.target.files[0],
       });
+
+      var prevImgSec = document.querySelector('.cover_image_preview')
+      const file = e.target.files[0]
+
+      const reader = new FileReader()
+      reader.addEventListener("load", function () {
+        prevImgSec.innerHTML += `
+                    <img className="upload_prv_img" src=${this.result} />
+                `
+      })
+      reader.readAsDataURL(file)
     };
 
     const showTitleTutorial = (e) => {
@@ -129,6 +140,9 @@ const EditForm = (props) => {
                 accept="image/*"
                 onChange={uploadCover}
               />
+              <div className='cover_image_preview'>
+
+              </div>
             </div>
 
             <input

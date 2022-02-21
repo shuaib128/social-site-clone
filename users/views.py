@@ -164,10 +164,10 @@ class FollowesView(APIView):
         userProfile = get_object_or_404(Profile, id=userID)
 
         userProfile.save()
-        if userProfile.Followes.filter(id=followerID).exists():
-            userProfile.Followes.remove(followerID)
+        if userProfile.Following.filter(id=followerID).exists():
+            userProfile.Following.remove(followerID)
         else:
-            userProfile.Followes.add(followerID)
+            userProfile.Following.add(followerID)
         
         response = Response()
         response.data = {
@@ -175,3 +175,9 @@ class FollowesView(APIView):
         }
         return response
 
+
+#Save post view
+class SavePostView(APIView):
+    def get(self, request):
+        print("got it")
+        return Response("saved")

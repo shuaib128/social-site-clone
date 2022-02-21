@@ -413,7 +413,7 @@ video {
   margin-top: 10px;
 }
 
-.post_bottom_left a {
+.post_bottom_left p {
   background: #d2d6db;
   height: 26px;
   padding: 0 10px;
@@ -421,6 +421,7 @@ video {
   margin-left: 9px;
   font-size: 13px;
   border-radius: 4px;
+  cursor: pointer;
 }
 
 .type_post {
@@ -914,7 +915,7 @@ video {
 }
 
 .input_div_cover {
-  padding: 5px 0px;
+  padding: 5px 16px;
   position: relative;
   width: 179px;
   cursor: pointer;

@@ -38,5 +38,5 @@ class ProfileSerializer(serializers.ModelSerializer):
             'education',
             'address',
             'joined_date',
-            'Followes'
+            'Following'
         ]

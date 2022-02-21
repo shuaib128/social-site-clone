@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 import { BackendHost } from '../Api/BackendHost';
+import axios from 'axios';
 
 const Header = (props) => {
     const [searchInput, setsearchInput] = useState("")
@@ -27,11 +28,20 @@ const Header = (props) => {
         document.querySelector('.profile_detail_box').classList.toggle('appire')
     }
 
+    //Load latest posts and go top
+    const getLatestPost = () => {
+        window.scrollTo(0, 0)
+
+        axios.get(`${BackendHost}/api/posts/`).then((res) => props.setPost(res.data));
+    }
+
     return (
         <>
             <div className="nav_section">
                 <div className="nav_left">
-                    <div className="logo_block"><p><Link to="/">SHUAIB</Link></p></div>
+                    <div className="logo_block" onClick={getLatestPost}>
+                        <p><Link to="/">DEVZ</Link></p>
+                    </div>
                     <form className="search_form__" onSubmit={search}>
                         <input
                             required

@@ -94,6 +94,7 @@ function App() {
           setProfileID={setProfileID}
           setProfileData={setProfileData}
           setSserProfileImage={setSserProfileImage}
+          setPost={setPost}
         />
 
         <Route

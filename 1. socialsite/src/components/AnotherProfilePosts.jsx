@@ -28,7 +28,7 @@ const ProfilePosts = (props) => {
                                 {post.images.map((image, index) => {
                                     return(
                                         <Fragment>
-                                            <img src={ServerHost + image.image} />
+                                            <img alt='image_server' src={ServerHost + image.image} />
                                         </Fragment>
                                     )
                                 })}
@@ -39,7 +39,7 @@ const ProfilePosts = (props) => {
                     }
                     <div className="post_bottom">
                         <div className="profile_post">
-                            <img src={ServerHost + post.ProfileItems.image} />
+                            <img alt='image_server' src={ServerHost + post.ProfileItems.image} />
                             <p className="profile_name">
                                 {post.Author}
                                 <span style={{display: 'block', color:'#64707d', fontSize:'13px', marginTop: '3px'}}>

@@ -72,11 +72,11 @@ const AnotherProfile = (props) => {
                         <div className="profile_image_des">
                             <img src={BackendHost + UserDatas.image} alt="profile" />
                             <div style={{ display: 'flex', justifyContent: "center" }}>
-                                {props.profileData.Followes && props.profileData.Followes.includes(UserDatas.id) ?
+                                {props.profileData.Following && props.profileData.Following.includes(UserDatas.id) ?
                                     <button className="followed_button"
                                         onClick={handleFollowes}
                                     >
-                                        Following...
+                                        Following
                                     </button> :
                                     <button className="follow_button"
                                         onClick={handleFollowes}

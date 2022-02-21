@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { BackendHost } from '../Api/BackendHost';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 const Post = (props) => {
@@ -36,6 +37,15 @@ const Post = (props) => {
                 document.querySelector(`.like${postID}`).querySelector(".num_of_likes").innerHTML = `${data.likes}`
             })
             .catch((err) => console.log(err))
+    }
+
+
+    //Save to reading list handler
+    const savePost = () => {
+        axios.get(`${BackendHost}/api/user/save/`)
+            .then(res => {
+                
+            })
     }
 
 
@@ -101,9 +111,9 @@ const Post = (props) => {
                                         </div>
                                     </div>
 
-                                    <div className="post_bottom_left">
+                                    <div className="post_bottom_left" onClick={savePost}>
                                         <p>{post.get_readtime} read</p>
-                                        <a href="#">Save</a>
+                                        <p>Save</p>
                                     </div>
                                 </div>
                             </div>

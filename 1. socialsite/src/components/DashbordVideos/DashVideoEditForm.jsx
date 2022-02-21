@@ -1,7 +1,6 @@
-import React,{ useState, useEffect } from 'react'
+import React,{ useState } from 'react'
 import axios from 'axios';
 import { useParams } from 'react-router-dom'
-import {Redirect} from "react-router-dom";
 import PostEditTutorial from '../../PostEditTutorial';
 import { BackendHost } from '../../Api/BackendHost';
 import ReqToMakeAnaccount from '../ReqToMakeAnaccount';

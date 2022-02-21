@@ -43,7 +43,7 @@ const CommentMainForm = (props) => {
             <div className="comment_reply">
                 <form onSubmit={NewComment}>
                     <div className="comment">
-                        <img src={ServerHost + props.profileData.image} />
+                        <img alt='image_server' src={ServerHost + props.profileData.image} />
                         <textarea required placeholder="Add a discutation" className="comment_form"
                             onChange={(e) => setComment(e.target.value)}
                         />
