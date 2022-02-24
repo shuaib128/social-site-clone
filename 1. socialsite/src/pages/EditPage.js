@@ -52,10 +52,9 @@ const EditPage = () => {
             <div className="post_title_tags">
               <p className="post_title">{post.title}</p>
               <ul className="tags">
-                <li className="tag_">#react</li>
-                <li className="tag_">#javascript</li>
-                <li className="tag_">#pwa</li>
-                <li className="tag_">#node</li>
+                {post.post_category.map((cat, index) => (
+                  <li key={index} className="tag_">#{cat.name}</li>
+                ))}
               </ul>
 
               <div className="post_bottom_ modify_post_bottom_">

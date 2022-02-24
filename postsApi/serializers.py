@@ -1,6 +1,5 @@
-from django.db.models import fields
 from rest_framework import serializers
-from .models import Post, Image, Comments, Replyes
+from .models import Post, Image, Comments, Replyes, Category
 from django.contrib.auth.models import User
 from users.models import Profile
 
@@ -30,14 +29,6 @@ class ImageSerializer(serializers.ModelSerializer):
             'image'
         )
 
-
-class LikedUsersSerilizer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = (
-            'id',
-            'username'
-        )
 
 class CommentUsersSerilizer(serializers.ModelSerializer):
     class Meta:
@@ -80,12 +71,21 @@ class CommentsSerilizer(serializers.ModelSerializer):
         )
 
 
+class CategorySerilizer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = (
+            'id',
+            'name'
+        )
+
+
 class PostSereileizer(serializers.ModelSerializer):
     Author = serializers.CharField(source='auhtor', read_only=True)
     ProfileItems = ProfileSerializer(required=True)
     images = ImageSerializer(many=True)
-    # likes = LikedUsersSerilizer(many=True)
     comments = CommentsSerilizer(many=True)
+    post_category = CategorySerilizer(many=True)
 
     class Meta:
         fields = (
@@ -101,6 +101,8 @@ class PostSereileizer(serializers.ModelSerializer):
             'whenpublished',
             'ProfileItems',
             'likes',
-            'comments'
+            'comments',
+            'post_category_str',
+            'post_category'
         )
         model = Post

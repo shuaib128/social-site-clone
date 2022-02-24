@@ -60,10 +60,9 @@ const DetailsPostRight = (props) => {
                                 {post.title}
                             </Link>
                             <ul className="tags_detail">
-                                <li>html</li>
-                                <li>webdev</li>
-                                <li>javascrict</li>
-                                <li>css</li>
+                                {post.post_category.map((cat, index) => (
+                                    <li key={index} className="tag_">#{cat.name}</li>
+                                ))}
                             </ul>
                         </div>
                     ))}

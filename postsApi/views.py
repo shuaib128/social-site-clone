@@ -1,7 +1,13 @@
+from unicodedata import name
+from venv import create
 from django.shortcuts import get_object_or_404
-from .models import Post, Image, Comments, Replyes
+from .models import (
+    Post, Image, Comments, Replyes, Category
+)
 from rest_framework import generics
-from .serializers import PostSereileizer, CommentsSerilizer, ReplyesSerilizer, ProfileSerializer
+from .serializers import (
+    PostSereileizer, CommentsSerilizer, ReplyesSerilizer
+)
 from rest_framework.permissions import (
     SAFE_METHODS, 
     BasePermission,
@@ -80,6 +86,7 @@ class PostCreateView(APIView):
         post.description = description
         post.auhtor = auhtor
         post.ProfileItems = ProfileItems
+        post.post_category_str = request.data['Catagory']
         try:
             post.cover_image = request.data['coverImg']
             print(request.data['coverImg'])
@@ -91,6 +98,20 @@ class PostCreateView(APIView):
         if images_id:
             for i in images_id:
                 post.images.add(i)
+
+        #Add category to post
+        category_string = request.data['Catagory']
+        comma_separated_category = category_string.split(",")
+
+        for cat in comma_separated_category:
+            if Category.objects.filter(name=cat).exists():
+                pass
+            else:
+                Category.objects.create(
+                    name = cat
+                )
+            post.post_category.add(get_object_or_404(Category, name=cat))
+        
 
         response = Response()
         response.data = {
@@ -148,6 +169,7 @@ class PostUpdateView(APIView):
 
         post.title = title
         post.description = description
+        post.post_category_str = request.data['Catagory']
         try:
             post.cover_image = coverImg
         except:
@@ -158,6 +180,20 @@ class PostUpdateView(APIView):
         if images_id:
             for i in images_id:
                 post.images.add(i)
+
+
+        #Add category to post
+        category_string = request.data['Catagory']
+        comma_separated_category = category_string.split(",")
+
+        for cat in comma_separated_category:
+            if Category.objects.filter(name=cat).exists():
+                pass
+            else:
+                Category.objects.create(
+                    name = cat
+                )
+            post.post_category.add(get_object_or_404(Category, name=cat))
 
         response = Response()
         response.data = {

@@ -9,6 +9,7 @@ const NewPost = (props) => {
     //Post fields state
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [Catagory, setCatagory] = useState('')
     const [postimage, setPostimage] = useState(null);
     const [coverimage, setCoverimage] = useState(null);
     const Author = props.username
@@ -29,6 +30,7 @@ const NewPost = (props) => {
             formData.append('description', description);
             formData.append('Author', Author);
             formData.append('Profile', Profile);
+            formData.append('Catagory', Catagory);
             try {
                 formData.append('coverImg', coverimage.image);
             } catch
@@ -145,6 +147,12 @@ const NewPost = (props) => {
                         </div>
 
                         <div className='prev_imgs'></div>
+
+                        <input type="text"
+                            className='cat_input'
+                            placeholder='Separate all category by comma'
+                            onChange={e => setCatagory(e.target.value.replace(/\s/g, ''))}
+                        />
                         <button className='re_btn post_btn' type="submit">Post</button>
                     </form>
 

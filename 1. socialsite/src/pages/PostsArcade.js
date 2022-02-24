@@ -27,15 +27,9 @@ const PostsArcade = (props) => {
               </p>
               <ul className="types_posts">
                 <li><Link to="/">Posts</Link></li>
-                <li>
-                  <Link to="/videos">Videos</Link>
-                </li>
-                <li>
-                  <a href="#">Lives</a>
-                </li>
-                <li>
-                  <a href="#">Podcasts</a>
-                </li>
+                <li><Link to="/videos">Videos</Link></li>
+                <li><a href="#">Lives</a></li>
+                <li><a href="#">Podcasts</a></li>
               </ul>
             </div>
 

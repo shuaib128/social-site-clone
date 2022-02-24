@@ -2,11 +2,11 @@ from rest_framework import serializers
 from django.contrib.auth.models import User
 from .models import Profile, SavedPosts
 
-#User Serileizer
+# User Serileizer
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email','password']
+        fields = ['id', 'username', 'email', 'password']
 
         extra_kwargs = {
             'password': {'write_only': True}
@@ -20,15 +20,18 @@ class UserSerializer(serializers.ModelSerializer):
             instance.save()
             return instance
 
-#Saved post
+# Saved post
 class SavedPostSerilizer(serializers.ModelSerializer):
     class Meta:
         model = SavedPosts
         fields = [
-            "post_id"
+            "post_id",
+            "Author",
+            "title",
+            "pubDate",
         ]
 
-#Profile Serilizer
+# Profile Serilizer
 class ProfileSerializer(serializers.ModelSerializer):
     saved_posts = SavedPostSerilizer(many=True)
 

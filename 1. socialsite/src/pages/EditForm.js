@@ -11,6 +11,7 @@ const EditForm = (props) => {
   const [title, setTitle] = useState("");
   const [deletedImgIDs, setDeletedImgIDs] = useState([]);
   const [description, setDescription] = useState("");
+  const [Catagory, setCatagory] = useState('')
   const [postimage, setPostimage] = useState(null);
   const Author = props.username;
   const Profile = props.profileID;
@@ -28,6 +29,11 @@ const EditForm = (props) => {
 
       setTitle(res.data.title);
       setDescription(res.data.description);
+      setCatagory(res.data.post_category_str)
+
+      res.data.post_category.map((cat) => {
+        console.log(cat.name);
+      })
     });
   });
   if (!post) return "Loading...";
@@ -53,6 +59,7 @@ const EditForm = (props) => {
       formData.append("description", description);
       formData.append("Author", Author);
       formData.append("Profile", Profile);
+      formData.append('Catagory', Catagory);
       try {
         formData.append("coverImg", coverimage.image);
       } catch {
@@ -210,6 +217,13 @@ const EditForm = (props) => {
                   );
                 })}
             </div>
+
+            <input type="text"
+              className='cat_input'
+              placeholder='Separate all category by comma'
+              value={Catagory}
+              onChange={e => setCatagory(e.target.value)}
+            />
             <button className="re_btn post_btn" type="submit">
               Save
             </button>

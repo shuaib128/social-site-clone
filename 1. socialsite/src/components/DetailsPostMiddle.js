@@ -38,10 +38,9 @@ const DetailsPostMiddle = (props) => {
                 <h1 className="detail_post_title">{props.post.title}</h1>
 
                 <ul className="tags_detail">
-                    <li>html</li>
-                    <li>webdev</li>
-                    <li>javascrict</li>
-                    <li>css</li>
+                    {props.post.post_category.map((cat, index) => (
+                        <li key={index} className="tag_">#{cat.name}</li>
+                    ))}
                 </ul>
 
                 <div className="detail_profile_data">

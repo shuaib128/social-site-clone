@@ -69,7 +69,10 @@ const Profile = (props) => {
 
                             <div className="right_bottom_section">
                                 <div className="frofile_posts">
-                                    <ProfilePosts posts={posts} username={props.username} />
+                                    <ProfilePosts
+                                        posts={posts}
+                                        username={props.username}
+                                    />
                                 </div>
 
                                 <div className="profile_video_sec">

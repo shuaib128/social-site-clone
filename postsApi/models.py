@@ -1,3 +1,5 @@
+from statistics import mode
+from unicodedata import name
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -27,7 +29,7 @@ class Image(models.Model):
             img.thumbnail(new_img)
             img.save(self.image.path)
 
-
+#Reply models
 class Replyes(models.Model):
     name = models.CharField(max_length=1000, default="Image Name")
     users = models.ForeignKey(User, on_delete=models.CASCADE, default=0)
@@ -42,7 +44,7 @@ class Replyes(models.Model):
     class Meta:
         ordering = ['-pub_date',]
 
-
+#Comments model
 class Comments(models.Model):
     name = models.CharField(max_length=1000, default="Image Name")
     users = models.ForeignKey(User, on_delete=models.CASCADE, default=0)
@@ -57,6 +59,13 @@ class Comments(models.Model):
     
     def __str__(self):
         return str(self.name)
+
+#Category model
+class Category(models.Model):
+    name = models.CharField(max_length=1000, default="cat")
+
+    def __str__(self):
+        return self.name
     
 
 #Posts Model
@@ -76,6 +85,8 @@ class Post(models.Model):
     ProfileItems = models.ForeignKey(Profile, on_delete=models.CASCADE)
     likes = models.ManyToManyField(User, related_name='likes', null=True, blank=True,)
     comments = models.ManyToManyField(Comments, related_name='Comments', null=True, blank=True,)
+    post_category_str = models.CharField(max_length=1000, default="Post Title")
+    post_category = models.ManyToManyField(Category, related_name='Category', null=True, blank=True,)
 
     class Meta:
         ordering = ['-pub_date',]
