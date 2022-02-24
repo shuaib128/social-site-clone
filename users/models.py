@@ -32,4 +32,4 @@ class Profile(models.Model):
     saved_posts = models.ManyToManyField(SavedPosts, related_name='SavedPosts', null=True, blank=True,)
 
     def __str__(self):
-        return f"{self.user} Profile"
+        return f"{self.id}-{self.user} Profile"
