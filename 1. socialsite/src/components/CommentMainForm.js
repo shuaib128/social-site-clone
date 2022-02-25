@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { ServerHost } from './ServerHost';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -14,14 +14,14 @@ const CommentMainForm = (props) => {
 
     const NewComment = (e) => {
         e.preventDefault()
-        
+
         //store and send all comment
         URL = `${BackendHost}/api/posts/comments/${id}/`
-        const config = { headers: { 'Content-Type': 'multipart/form-data' }}
+        const config = { headers: { 'Content-Type': 'multipart/form-data' } }
         let formData = new FormData();
-        formData.append('comment', comment);       
-        formData.append('userID', userID);       
-        formData.append('postID', postID);       
+        formData.append('comment', comment);
+        formData.append('userID', userID);
+        formData.append('postID', postID);
 
         //Send data with axios
         axios
@@ -30,13 +30,13 @@ const CommentMainForm = (props) => {
                 props.setComments([...props.comments, res.data])
             })
             .catch((err) => console.log(err));
-        
+
         setRedirect(true);
     }
 
     return (
         <>
-            <p style={{fontSize: '25px', fontWeight: 600}}>
+            <p style={{ fontSize: '25px', fontWeight: 600 }}>
                 Discution ({props.post.comments.length})
             </p>
 
@@ -48,7 +48,7 @@ const CommentMainForm = (props) => {
                             onChange={(e) => setComment(e.target.value)}
                         />
                     </div>
-                    
+
                     <button type="submit" className="comment_btn">Comment</button>
                     <button className="comment_btn cancel_btn">Cancel</button>
                 </form>

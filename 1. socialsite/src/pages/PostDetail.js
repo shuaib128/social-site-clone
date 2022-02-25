@@ -5,6 +5,8 @@ import DetailsPostLeft from "../components/DetailsPostLeft";
 import DetailsPostMiddle from "../components/DetailsPostMiddle";
 import DetailsPostRight from "../components/DetailsPostRight";
 import { BackendHost } from "../Api/BackendHost";
+import PostDetailLoading from "../components/LoadingComponents/PostDetailLoading";
+
 
 const PostDetail = (props) => {
   //Get perametar and fetch post data
@@ -14,7 +16,7 @@ const PostDetail = (props) => {
       .get(`${BackendHost}/api/posts/${id}/`)
       .then((res) => setPost(res.data));
   });
-  if (!post) return "Loading...";
+  if (!post) return <PostDetailLoading />;
   if (!post) return "Error!";
 
   return (

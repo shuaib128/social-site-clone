@@ -5,6 +5,8 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Post = (props) => {
     const history = useHistory()

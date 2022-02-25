@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { BackendHost } from '../Api/BackendHost';
 import axios from 'axios';
@@ -11,9 +11,9 @@ const DashBordVideos = (props) => {
         axios.post(`${BackendHost}/api/posts/dashbord/`, {
             name: props.username
         })
-        .then((res) => {
-            setPost(res.data);
-        })
+            .then((res) => {
+                setPost(res.data);
+            })
     });
 
     //Video Req axois
@@ -22,13 +22,13 @@ const DashBordVideos = (props) => {
         axios.post(`${BackendHost}/api/videos/dashbord/`, {
             name: props.username
         })
-        .then((res) => {
-            setVideos(res.data);
-        })
+            .then((res) => {
+                setVideos(res.data);
+            })
     });
 
-    if (!posts && props.username === undefined){
-        return(
+    if (!posts && props.username === undefined) {
+        return (
             <ReqToMakeAnaccount />
         )
     }
@@ -55,7 +55,7 @@ const DashBordVideos = (props) => {
 
                     <div className="profile_posts_archive_right">
                         <div className="profile_post_filter">
-                            <p style={{fontSize: '25px'}}>Posts</p>
+                            <p style={{ fontSize: '25px' }}>Posts</p>
                             <select name="selectbycate" id="selectcat">
                                 <option value="volvo">Recent Post</option>
                                 <option value="volvo">Most Viewed</option>
@@ -66,7 +66,7 @@ const DashBordVideos = (props) => {
 
                         <div className="right_bottom_section">
                             <div className="frofile_posts">
-                                <DashBordVideosComponents 
+                                <DashBordVideosComponents
                                     Videos={Videos}
                                 />
                             </div>
