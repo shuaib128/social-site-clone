@@ -40,7 +40,17 @@ const PostsArcade = (props) => {
                 username={props.username}
                 profileID={props.profileID}
                 setPost={props.setPost}
+                pagenum={props.pagenum}
+                setpagenum={props.setpagenum}
+                LoaingPost={props.LoaingPost}
+                setLoaingPost={props.setLoaingPost}
               />
+
+              {!props.LoaingPost ?
+                <div className="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
+                :
+                ''
+              }
             </div>
           </div>
 

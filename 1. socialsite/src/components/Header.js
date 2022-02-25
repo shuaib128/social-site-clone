@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { BackendHost } from '../Api/BackendHost';
 import axios from 'axios';
 
 const Header = (props) => {
     const [searchInput, setsearchInput] = useState("")
+    const history = useHistory();
 
+    //Search hanhlder
     const search = (e) => {
         e.preventDefault()
+        window.scrollTo(0, 0)
 
         props.setsearchDataInput(searchInput)
+        history.push({
+            pathname: "/search",
+            state: {"data": searchInput}
+        });
     }
-
 
     //Logout function
     const logout = () => {
@@ -32,7 +38,12 @@ const Header = (props) => {
     const getLatestPost = () => {
         window.scrollTo(0, 0)
 
-        axios.get(`${BackendHost}/api/posts/`).then((res) => props.setPost(res.data));
+        axios.post(`${BackendHost}/api/posts/`, {
+            pagenum: 1
+        })
+            .then((res) => {
+                props.setPost(res.data)
+            });
     }
 
     return (

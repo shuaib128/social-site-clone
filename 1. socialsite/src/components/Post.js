@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useCallback} from 'react';
 import { Link } from 'react-router-dom';
 import { BackendHost } from '../Api/BackendHost';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
@@ -55,17 +55,62 @@ const Post = (props) => {
             })
     }
 
+    //Infinity scroll
+    const observer = useRef()
+    const sendMoreReqInfnityScroll = (pageNUM) => {
+        axios.post(`${BackendHost}/api/posts/`, {
+            pagenum: pageNUM
+        })
+            .then((res) => {
+                props.setPost(e => {
+                    try {
+                        return [...props.posts, ...res.data]
+                    } catch (error) {
+                        axios.post(`${BackendHost}/api/posts/`, {
+                            pagenum: pageNUM
+                        }).then((res) => {
+                            props.setPost(res.data);
+                        })
+                    }
+                })
+                props.setLoaingPost(true)
+            })
+    }
+
+
+    const lastElement = useCallback(node => {
+        if (!props.LoaingPost) return
+        if (observer.current) observer.current.disconnect()
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting) {
+                if (props.LoaingPost) {
+                    props.setLoaingPost(false)
+                    props.setpagenum((prevstate) => prevstate + 1)
+
+                    if (props.pagenum !== 1) {
+                        sendMoreReqInfnityScroll(props.pagenum)
+                    } else {
+                        sendMoreReqInfnityScroll(2)
+                    }
+                }
+            }
+        })
+        if (node) observer.current.observe(node)
+    }, [props.pagenum, props.LoaingPost])
+
 
     return (
         <>
             {props.posts && props.posts.map((post, index) => {
                 return (
-                    <div className="post_" key={post.id}>
+                    <div className="post_" key={post.id} ref={lastElement}>
                         {post.cover_image !== null ?
                             <div className="post_img">
                                 <LazyLoadImage
                                     alt={post.id}
-                                    src={post.cover_image}
+                                    src={post.cover_image.includes(BackendHost) ?
+                                        post.cover_image : BackendHost + post.cover_image
+                                    }
                                 />
                             </div>
                             :
@@ -75,7 +120,12 @@ const Post = (props) => {
                         <div className="post_bottom">
                             <div className="profile_post">
                                 <Link to={"/user/profile/" + post.ProfileItems.id}>
-                                    <img src={post.ProfileItems.image} alt="post_image" />
+                                    <img
+                                        src={post.ProfileItems.image.includes(BackendHost) ?
+                                            post.ProfileItems.image : BackendHost + post.ProfileItems.image
+                                        }
+                                        alt="post_image"
+                                    />
                                 </Link>
                                 <p className="profile_name">
                                     {post.Author}

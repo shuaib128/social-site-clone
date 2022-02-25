@@ -38,6 +38,9 @@ function App() {
   const [profileData, setProfileData] = useState([]);
   const [searchDataInput, setsearchDataInput] = useState("");
 
+  const [pagenum, setpagenum] = useState(1)
+  const [LoaingPost, setLoaingPost] = useState(true)
+
   //Get user data
   useEffect(() => {
     try {
@@ -72,15 +75,14 @@ function App() {
 
   //Get all posts
   const [posts, setPost] = useState(() => {
-    axios.get(`${BackendHost}/api/posts/`).then((res) => setPost(res.data));
+    axios.post(`${BackendHost}/api/posts/`, {
+      pagenum: pagenum
+    })
+      .then((res) => {
+        setPost(res.data)
+      });
   });
 
-  //Search by query and get post by that qyery
-  useEffect(() => {
-    axios
-      .get(`${BackendHost}/api/posts/post/search/?search=${searchDataInput}`)
-      .then((res) => setPost(res.data));
-  }, [searchDataInput]);
 
   return (
     <div className="App">
@@ -108,6 +110,10 @@ function App() {
               profileID={profileID}
               posts={posts}
               setPost={setPost}
+              pagenum={pagenum}
+              setpagenum={setpagenum}
+              LoaingPost={LoaingPost}
+              setLoaingPost={setLoaingPost}
             />
           )}
         />

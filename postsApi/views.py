@@ -1,5 +1,3 @@
-from unicodedata import name
-from venv import create
 from django.shortcuts import get_object_or_404
 from .models import (
     Post, Image, Comments, Replyes, Category
@@ -20,6 +18,7 @@ from rest_framework.response import Response
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
 from uuid import uuid4
 from rest_framework import filters
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -34,11 +33,20 @@ class PostUserWritePermission(BasePermission):
         return obj.auhtor == request.user
 
 
-# Post Api View
-class PostViewSet(generics.ListCreateAPIView, PostUserWritePermission):
-    permission_classes = [PostUserWritePermission]
-    queryset = Post.objects.all()
-    serializer_class = PostSereileizer
+# Posts Api View
+class PostViewSet(APIView):
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
+
+    def post(self, request, format=None):
+        posts = Post.objects.all()
+        paginator = Paginator(posts, 10)
+        page_number = request.data["pagenum"]
+
+        if page_number:
+            if int(page_number) <= paginator.num_pages:
+                obj_list = paginator.get_page(page_number)
+                serilizer = PostSereileizer(obj_list, many=True)
+                return Response(serilizer.data)
 
 
 #Post detail view
