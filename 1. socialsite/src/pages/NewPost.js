@@ -21,6 +21,13 @@ const NewPost = (props) => {
         //Submit new post
         const NewPost = async (e) => {
             e.preventDefault();
+            document.querySelector(".new_post_btn").textContent = "Posting.."
+            document.querySelector(".new_post_btn").disabled = true
+            document.querySelector(".new_post_btn").style.cssText = `
+                border: 1px solid #0066cc;
+                background-color: #0099cc;
+                color: #ffffff;
+            `
 
             //store and send all data
             URL = `${BackendHost}/api/posts/new_post/`
@@ -43,14 +50,18 @@ const NewPost = (props) => {
                 }
             } catch
             {
-                console.log(1);
+                console.log(1)
             }
 
             //Send data with axios
             axios
                 .post(URL, formData, config)
+                .then((res) => {
+                    if (res.data.responce === "created") {
+                        history.push("/")
+                    }
+                })
                 .catch((err) => console.log(err));
-            history.push("/")
         }
 
 
@@ -153,7 +164,7 @@ const NewPost = (props) => {
                             placeholder='Separate all category by comma'
                             onChange={e => setCatagory(e.target.value.replace(/\s/g, ''))}
                         />
-                        <button className='re_btn post_btn' type="submit">Post</button>
+                        <button className='re_btn post_btn new_post_btn' type="submit">Post</button>
                     </form>
 
                     <PostEditTutorial />

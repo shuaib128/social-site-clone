@@ -1,10 +1,10 @@
-from turtle import title
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .serializers import UserSerializer, ProfileSerializer
 from rest_framework.exceptions import AuthenticationFailed
 import jwt
+import re
 import datetime
 from django.contrib.auth.models import User
 from .models import Profile, SavedPosts
@@ -15,6 +15,48 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 
+# Password cheker function
+def password_check(password):
+    """
+    Verify the strength of 'password'
+    Returns a dict indicating the wrong criteria
+    A password is considered strong if:
+        8 characters length or more
+        1 digit or more
+        1 symbol or more
+        1 uppercase letter or more
+        1 lowercase letter or more
+    """
+
+    # calculating the length
+    length_error = len(password) < 8
+
+    # searching for digits
+    digit_error = re.search(r"\d", password) is None
+
+    # searching for uppercase
+    uppercase_error = re.search(r"[A-Z]", password) is None
+
+    # searching for lowercase
+    lowercase_error = re.search(r"[a-z]", password) is None
+
+    # searching for symbols
+    symbol_error = re.search(r"[ !#$%&'()*+,-./[\\\]^_`{|}~"+r'"]', password) is None
+
+    # overall result
+    password_ok = not ( length_error or digit_error or uppercase_error or lowercase_error or symbol_error )
+
+    return {
+        'password_ok' : password_ok,
+        'length_error' : length_error,
+        'digit_error' : digit_error,
+        'uppercase_error' : uppercase_error,
+        'lowercase_error' : lowercase_error,
+        'symbol_error' : symbol_error,
+    }
+
+
+# Custom Token
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -33,15 +75,32 @@ class MyTokenObtainPairView(TokenObtainPairView):
 # Register view hwre
 class RegisterView(APIView):
     def post(self, request):
-        print(request.data)
+        Password = request.data['password']
+        
+        try:
+            if password_check(Password)["password_ok"]:
+                user = User.objects.create(
+                    email=request.data['email'],
+                    username=request.data['username'],
+                    password=make_password(Password)
+                )
+                Token.objects.create(user=user)
+                return Response("sucess")
+            elif password_check(Password)["length_error"]:
+                return Response("length_error")
+            elif password_check(Password)["digit_error"]:
+                return Response("digit_error")
+            elif password_check(Password)["uppercase_error"]:
+                return Response("uppercase_error")
+            elif password_check(Password)["lowercase_error"]:
+                return Response("lowercase_error")
+            elif password_check(Password)["symbol_error"]:
+                return Response("symbol_error")
+            else:
+                return Response("not strong enough password")
 
-        user = User.objects.create(
-            email=request.data['email'],
-            username=request.data['username'],
-            password=make_password(request.data['password'])
-        )
-        Token.objects.create(user=user)
-        return Response(user)
+        except Exception as e:
+            return Response(str(e))
 
 
 # Login view hwre
@@ -66,8 +125,7 @@ class LoginView(APIView):
             'iat': datetime.datetime.utcnow()
         }
 
-        token = jwt.encode(payload, 'secret',
-                           algorithm='HS256').decode('utf-8')
+        token = jwt.encode(payload, 'secret', algorithm='HS256').decode('utf-8')
 
         response = Response()
 

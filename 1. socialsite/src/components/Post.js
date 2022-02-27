@@ -5,8 +5,6 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
 
 const Post = (props) => {
     const history = useHistory()
@@ -105,7 +103,7 @@ const Post = (props) => {
         <>
             {props.posts && props.posts.map((post, index) => {
                 return (
-                    <div className="post_" key={post.id} ref={lastElement}>
+                    <div className="post_" key={index} ref={lastElement}>
                         {post.cover_image !== null ?
                             <div className="post_img">
                                 <LazyLoadImage
@@ -123,7 +121,7 @@ const Post = (props) => {
                             <div className="profile_post">
                                 <Link to={"/user/profile/" + post.ProfileItems.id}>
                                     <img
-                                        src={post.ProfileItems.image.includes(BackendHost) ?
+                                        src={post.ProfileItems.image && post.ProfileItems.image.includes(BackendHost) ?
                                             post.ProfileItems.image : BackendHost + post.ProfileItems.image
                                         }
                                         alt="post_image"
@@ -169,9 +167,11 @@ const Post = (props) => {
                                         </div>
                                     </div>
 
-                                    <div className="post_bottom_left" onClick={() => savePost(post.id, post.Author, post.pub_date, post.title, post.whenpublished)}>
+                                    <div className="post_bottom_left">
                                         <p>{post.get_readtime} read</p>
-                                        <p>Save</p>
+                                        <p onClick={() => savePost(post.id, post.Author, post.pub_date, post.title, post.whenpublished)}>
+                                            Save
+                                        </p>
                                     </div>
                                 </div>
                             </div>

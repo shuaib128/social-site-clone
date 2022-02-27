@@ -123,7 +123,7 @@ class PostCreateView(APIView):
 
         response = Response()
         response.data = {
-            'data': 'data'
+            'responce': 'created'
         }
         return response
 
