@@ -8,7 +8,6 @@ const CommentMainForm = (props) => {
     const [comment, setComment] = useState('')
     const postID = props.post.id
     const userID = props.profileData.id
-    const [redirect, setRedirect] = useState(false);
 
     const { id } = useParams()
 
@@ -23,15 +22,21 @@ const CommentMainForm = (props) => {
         formData.append('userID', userID);
         formData.append('postID', postID);
 
+        //Set loading
+        document.querySelector(`.comment_btn`).innerHTML =
+            `
+            <div class="loader"></div>
+        `
+
         //Send data with axios
         axios
             .post(URL, formData, config,)
             .then(res => {
                 props.setComments([...props.comments, res.data])
+                document.querySelector(`.comment_btn`).innerHTML = "Comment"
+                document.querySelector(`.comment_form`).value = ""
             })
             .catch((err) => console.log(err));
-
-        setRedirect(true);
     }
 
     return (

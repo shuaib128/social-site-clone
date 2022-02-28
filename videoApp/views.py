@@ -10,8 +10,6 @@ from rest_framework import generics
 from .serializers import VideoSerializer
 from .models import Videos
 from django.shortcuts import get_object_or_404
-import datetime
-from uuid import uuid4
 from users.models import Profile
 from django.contrib.auth.models import User
 
