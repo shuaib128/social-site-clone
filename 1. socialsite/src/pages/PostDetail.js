@@ -10,7 +10,7 @@ import PostDetailLoading from "../components/LoadingComponents/PostDetailLoading
 
 const PostDetail = (props) => {
   window.scrollTo(0, 0)
-  
+
   //Get perametar and fetch post data
   const { id } = useParams();
   const [post, setPost] = useState(() => {

@@ -4,6 +4,7 @@ import ProfilePosts from '../components/ProfilePosts'
 import ReqToMakeAnaccount from '../components/ReqToMakeAnaccount';
 import { BackendHost } from '../Api/BackendHost';
 import { Link } from 'react-router-dom';
+import DashbordLoaadingComponnents from '../components/LoadingComponents/DashbordLoaadingComponnents';
 
 const Profile = (props) => {
     const [posts, setPost] = useState(() => {
@@ -31,8 +32,9 @@ const Profile = (props) => {
             <ReqToMakeAnaccount />
         )
     }
-    if (!posts) return "Error!";
+    if (!posts) return <DashbordLoaadingComponnents />;
     if (!Videos) return "Error!";
+
     let postNum = Object.keys(posts).length
     let vidNum = Object.keys(Videos).length
     if (document.querySelector('.profile_detail_box').classList.contains('appire')) {

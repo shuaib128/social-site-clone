@@ -1624,6 +1624,7 @@ video {
   margin: 0 auto;
   width: 93%;
   margin-top: 7%;
+  padding-bottom: 20px;
 }
 
 .usernameerror,

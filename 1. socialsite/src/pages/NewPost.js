@@ -76,6 +76,7 @@ const NewPost = (props) => {
 
             //get file images and show them in the prev_imgs section
             for (const img in file) {
+                console.log(file[img]);
                 const reader = new FileReader()
                 if (img !== 'length' && img !== 'item') {
                     reader.addEventListener("load", function () {
