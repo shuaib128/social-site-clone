@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (
     DeleteVideoView, VideoView, VideoCreateView, DashbordVideoView, VideoDetail,
-    VideoUpdateView, DeleteVideoView
+    VideoUpdateView, DeleteVideoView, FilterByUserVideoView
 )
 
 
@@ -12,4 +12,5 @@ urlpatterns = [
     path('dashbord/', DashbordVideoView.as_view(), name='DashbordVideoView'),
     path('update_video/<int:pk>/', VideoUpdateView.as_view(), name='VideoUpdateView'),
     path('delete_video/<int:pk>/', DeleteVideoView.as_view(), name='DeleteVideoView'),
+    path('video_user/<int:pk>/', FilterByUserVideoView.as_view(), name='FilterByUserVideoView'),
 ]

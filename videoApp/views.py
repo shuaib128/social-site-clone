@@ -128,3 +128,11 @@ class DashbordVideoView(APIView):
         return Response(serilizer.data)
 
 
+#Get matched videos by the user
+class FilterByUserVideoView(APIView):
+    def get(self, request, pk):
+        videos = Videos.objects.filter(auhtor__id=pk)
+        
+        serilizer = VideoSerializer(videos, many=True)
+        return Response(serilizer.data)
+

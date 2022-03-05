@@ -1676,3 +1676,25 @@ video {
   margin-top: 90px;
   padding-bottom: 5%;
 }
+
+.similler_videos {}
+
+.video_simmler {
+  display: flex;
+  height: 112px;
+  margin-bottom: 12px;
+}
+
+.video_simmler img {
+  width: 50%;
+  margin-right: 10px;
+}
+
+.similler_video_description {
+  width: 50%;
+}
+
+.vid_title {
+  font-size: 14px;
+  font-weight: 700
+}
