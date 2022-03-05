@@ -10,6 +10,7 @@ import math
 # Create your models here.
 class Videos(models.Model):
     title = models.CharField(max_length=1000, default="Video Title")
+    description = models.TextField(default="Body")
     thumbnail = models.ImageField(null=True, blank=True, upload_to='media/VideoThumbnail',)
     video = models.FileField(
         upload_to='videos', null=True, blank=True,

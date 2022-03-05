@@ -358,4 +358,8 @@
   .dashBord_videos .video video {
     height: 55vw;
   }
+
+  .video_section {
+    margin-top: 157px;
+  }
 }

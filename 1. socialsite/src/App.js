@@ -26,6 +26,7 @@ import DashBordVideos from "./pages/DashBordVideos";
 import DashbordVideoEditPageComponent from "./components/DashbordVideos/DashbordVideoEditPageComponent";
 import DashVideoEditForm from "./components/DashbordVideos/DashVideoEditForm";
 import ReadingListPage from "./pages/ReadingListPage";
+import VideoDetail from "./pages/VideoDetail";
 
 //Chat page
 import ChatRoom from "./pages/ChatRoom";
@@ -186,6 +187,7 @@ function App() {
 
         {/* Video paths */}
         <Route path="/videos" exact component={() => <VideosPage />} />
+        <Route path="/videos/:id" exact component={() => <VideoDetail />} />
         <Route
           path="/new_video"
           exact
